@@ -25,7 +25,9 @@ JOBPLUS is a comprehensive full-stack web application designed to streamline the
 ### Admin
 ![JOBPLUS Admin Interface](./assets/jobplus-admin1.gif)
 ![JOBPLUS Admin Interface](./assets/jobplus-admin2.gif)
-
+### Frontend
+![JOBPLUS Admin Interface](./assets/jobplus-frontend1.gif)
+![JOBPLUS Admin Interface](./assets/jobplus-frontend1.gif)
 
 ## Installation
 
