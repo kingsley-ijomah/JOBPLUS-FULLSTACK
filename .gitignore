@@ -1,0 +1,130 @@
+############################
+# OS X
+############################
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.Spotlight-V100
+.Trashes
+._*
+
+############################
+# Linux
+############################
+*~
+
+############################
+# Windows
+############################
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+############################
+# Packages
+############################
+*.7z
+*.csv
+*.dat
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.seed
+*.so
+*.swo
+*.swp
+*.swn
+*.swm
+*.out
+*.pid
+
+############################
+# Logs and databases
+############################
+.tmp
+*.log
+*.sql
+*.sqlite
+*.sqlite3
+
+############################
+# Misc.
+############################
+*#
+ssl
+.idea
+nbproject
+jobplus-backend/public/uploads/*
+!jobplus-backend/public/uploads/.gitkeep
+
+############################
+# Node.js
+############################
+lib-cov
+lcov.info
+pids
+logs
+results
+node_modules
+.node_history
+
+############################
+# Tests
+############################
+coverage
+
+############################
+# Strapi (jobplus-backend specific)
+############################
+jobplus-backend/.env
+jobplus-backend/license.txt
+jobplus-backend/exports
+jobplus-backend/*.cache
+jobplus-backend/dist
+jobplus-backend/build
+jobplus-backend/.strapi-updater.json
+
+############################
+# jobplus-frontend specific
+############################
+# Logs
+jobplus-frontend/logs
+jobplus-frontend/*.log
+jobplus-frontend/npm-debug.log*
+jobplus-frontend/yarn-debug.log*
+jobplus-frontend/yarn-error.log*
+jobplus-frontend/pnpm-debug.log*
+jobplus-frontend/lerna-debug.log*
+
+# Build artifacts
+jobplus-frontend/node_modules
+jobplus-frontend/dist
+jobplus-frontend/dist-ssr
+jobplus-frontend/*.local
+
+# Editor directories and files
+jobplus-frontend/.vscode/*
+!jobplus-frontend/.vscode/extensions.json
+jobplus-frontend/.idea
+jobplus-frontend/.DS_Store
+jobplus-frontend/*.suo
+jobplus-frontend/*.ntvs*
+jobplus-frontend/*.njsproj
+jobplus-frontend/*.sln
+jobplus-frontend/*.sw?
+jobplus-frontend/.env
