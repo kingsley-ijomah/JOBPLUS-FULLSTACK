@@ -32,7 +32,7 @@ git clone https://github.com/kingsley-ijomah/JOBPLUS-FULLSTACK.git
 
 # Navigate to the project directory
 cd JOBPLUS-FULLSTACK
-
+```
 
 ### Backend
 ```bash
@@ -57,4 +57,4 @@ yarn install
 # Start the backend server
 yarn dev
 
-```bash
+```
