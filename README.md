@@ -22,7 +22,9 @@ JOBPLUS is a comprehensive full-stack web application designed to streamline the
   - **Email-SendGrid**: Plugin for integrating SendGrid email services with Strapi.
 
 ## Visuals
-![JOBPLUS Admin Interface](./jobplus-admin-gif.gif)
+### Admin
+![JOBPLUS Admin Interface](./assets/jobplus-admin1.gif)
+![JOBPLUS Admin Interface](./assets/jobplus-admin2.gif)
 
 
 ## Installation
