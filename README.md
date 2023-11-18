@@ -34,7 +34,7 @@ git clone https://github.com/kingsley-ijomah/JOBPLUS-FULLSTACK.git
 cd JOBPLUS-FULLSTACK
 ```
 
-### Backend
+### Frontend
 ```bash
 # Navigate to the backend directory
 cd jobplus-backend
