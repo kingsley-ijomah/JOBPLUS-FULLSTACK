@@ -26,13 +26,13 @@ JOBPLUS is a comprehensive full-stack web application designed to streamline the
 
 ## Installation
 
-# Clone the repository
+### Clone the repository
 ```bash
 git clone https://github.com/kingsley-ijomah/JOBPLUS-FULLSTACK.git
 
 # Navigate to the project directory
 cd JOBPLUS-FULLSTACK
-```bash
+
 
 ### Backend
 ```bash
@@ -44,8 +44,6 @@ yarn install
 
 # Start the backend server
 yarn dev
-
-```bash
 
 ### Backend
 ```bash
