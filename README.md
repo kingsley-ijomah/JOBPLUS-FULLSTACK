@@ -44,6 +44,7 @@ yarn install
 
 # Start the backend server
 yarn dev
+```
 
 ### Backend
 ```bash
