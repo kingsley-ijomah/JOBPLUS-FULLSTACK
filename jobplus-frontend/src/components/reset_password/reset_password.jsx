@@ -4,6 +4,7 @@ import '../styles/form.scss';
 import Alert from '../alert/Alert';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
+import authService from '../../services/AuthService';
 
 export default function reset_password() {
   const [password, setPassword] = useState('');
@@ -14,6 +15,8 @@ export default function reset_password() {
   const location = useLocation();
 
   const { post } = useApi();
+
+  const { resetPassword } = authService();
 
   const searchParams = new URLSearchParams(location.search);
   const code = searchParams.get('code');
@@ -26,14 +29,14 @@ export default function reset_password() {
     navigate('/login');
   };
 
+  const handleError = (err) => {
+    setAlert(err);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent default form submission
 
-    await post('auth/reset-password', {
-      data: { passwordConfirmation, password, code},
-      onSuccess: (res) => handleSuccess(),
-      onFailure: (err) => setAlert(err)
-    });
+    await resetPassword(passwordConfirmation, password, code, handleSuccess, handleError);
   };
 
   return (

@@ -19,9 +19,27 @@ const authService = () => {
     });
   };
 
+  const forgotPassword = async (email, onSuccess, onFailure) => {
+    await post('auth/forgot-password', {
+      data: { email },
+      onSuccess: onSuccess,
+      onFailure: onFailure
+    });
+  };
+
+  const resetPassword = async (passwordConfirmation, password, code, onSuccess, onFailure) => {
+    await post('auth/reset-password', {
+      data: { passwordConfirmation, password, code },
+      onSuccess: onSuccess,
+      onFailure: onFailure
+    });
+  };
+
   return {
     registerUser,
-    loginUser
+    loginUser,
+    forgotPassword,
+    resetPassword
   }
 };
 
