@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/form.scss';
 import { Link } from 'react-router-dom';
 import Alert from '../alert/Alert';
-import { useApi } from '../../hooks/useApi';
+import authService from '../../services/AuthService';
 
 export default function register() {
   const [firstName, setFirstName] = useState('');
@@ -12,7 +12,8 @@ export default function register() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const [alert, setAlert] = useState({});
-  const { post } = useApi();
+
+  const { registerUser } = authService();
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent default form submission
@@ -48,11 +49,11 @@ export default function register() {
       });
     };
 
-    await post('auth/local/register', {
-      data: data,
-      onSuccess: (res) => handleSuccess(),
-      onFailure: (err) => setAlert(err) 
-    });
+    const handleError = (err) => {
+      setAlert(err);
+    };
+
+    await registerUser(data, handleSuccess, handleError);
   };
 
   return (
