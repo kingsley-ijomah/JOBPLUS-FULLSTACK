@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
 import { useAuth } from '../../contexts/AuthContext';
 import { useCookie } from '../../hooks/useCookie';
+import authService from '../../services/AuthService';
 
 export default function login() {
   const [identifier, setIdentifier] = useState('');
@@ -19,6 +20,8 @@ export default function login() {
   const navigate = useNavigate();
   const { post } = useApi();
 
+  const { loginUser } = authService();
+
   const handleSuccess = (res) => {
     // set the jwt token in a cookie
     saveAuthCookie(res.data.jwt);
@@ -31,14 +34,14 @@ export default function login() {
     navigate('/');
   };
 
+  const handleError = (err) => {
+    setAlert(err);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // prevent default form submission
 
-    await post('auth/local', {
-      data: { identifier, password },
-      onSuccess: (res) => handleSuccess(res),
-      onFailure: (err) => setAlert(err)
-    });
+    await loginUser({identifier, password}, handleSuccess, handleError);
   };
 
   return (

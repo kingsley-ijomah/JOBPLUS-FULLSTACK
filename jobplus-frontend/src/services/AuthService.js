@@ -11,10 +11,17 @@ const authService = () => {
     });
   };
 
-  //
+  const loginUser = async (credentials, onSuccess, onFailure) => {
+    await post('auth/local', {
+      data: credentials,
+      onSuccess: onSuccess,
+      onFailure: onFailure
+    });
+  };
 
   return {
-    registerUser
+    registerUser,
+    loginUser
   }
 };
 
