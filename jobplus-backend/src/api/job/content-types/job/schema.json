@@ -55,6 +55,12 @@
         "Durham",
         "Winchester"
       ]
+    },
+    "applied_jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::applied-job.applied-job",
+      "mappedBy": "job"
     }
   }
 }

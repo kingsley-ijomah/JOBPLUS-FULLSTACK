@@ -7,7 +7,8 @@
 module.exports = ({ strapi }) => ({
   async find(ctx) {
     try {
-      ctx.body = await strapi.service("api::job.job").find(ctx.query)
+      const userId = ctx.request.header["x-user-id"];
+      ctx.body = await strapi.service("api::job.job").find(ctx.query, userId)
     } catch ( error ) {
       strapi.log.error(error)
     }

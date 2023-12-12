@@ -63,7 +63,6 @@ export default function listings() {
   }
 
   const acceptModal = () => {
-    console.log('Accept save the job:', jobToSave);
     hideModal();
   }
 
@@ -75,6 +74,8 @@ export default function listings() {
   const handlePageChange = (pageNumber) => {
     fetchJobs(pageNumber, handleSuccess);
   };
+
+  console.log(jobs);
 
   return (
     <>

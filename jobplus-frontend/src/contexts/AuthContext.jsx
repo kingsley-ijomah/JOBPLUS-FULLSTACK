@@ -4,16 +4,17 @@ import { useCookie } from '../hooks/useCookie';
 const AuthContext = createContext({
   isAuthenticated: false,
   setIsAuthenticated: () => {},
+  getLoggedInUserId: null,
 });
 
 export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({children}) => {
-  const { hasValidAuthCookie } = useCookie();
+  const { hasValidAuthCookie, getLoggedInUserId } = useCookie();
   const [isAuthenticated, setIsAuthenticated] = useState(hasValidAuthCookie());
 
   return (
-    <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
+    <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated, getLoggedInUserId}}>
       {children}
     </AuthContext.Provider>
   );
