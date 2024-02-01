@@ -94,7 +94,7 @@ export default function listings() {
         }
         return job;
       });
-      setJobs(updatedJobs);
+      setJobs(updatedJobs); 
     });
   };
   
@@ -114,8 +114,6 @@ export default function listings() {
       setJobs(updatedJobs);
     });
   };
-
-  console.log(jobs);
 
   return (
     <>
