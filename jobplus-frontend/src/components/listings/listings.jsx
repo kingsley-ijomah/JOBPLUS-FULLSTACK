@@ -5,10 +5,10 @@ import Paginate from '../paginate/paginate';
 
 import { StarSaved, StarUnSaved, Money, Location, Timer } from '../images';
 
-import ConfirmationModal from '../comfirmation_modal/confirmation_modal';
 import jobService from '../../services/JobService';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useModal } from '../../hooks/useModal';
 
 import applyJobService from '../../services/AppliedJobService';
 
@@ -17,12 +17,13 @@ const MAX_LENGTH_CHARS = 200;
 export default function listings() {
   const [jobs, setJobs] = useState([]);
   const [meta, setMeta] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [jobToSave, setJobToSave] = useState(null);
 
   const { applyForJob, withdrawApplication } = applyJobService();
   const { getLoggedInUserId } = useAuth();
   const { fetchJobs } = jobService();
+
+  const { CustomModal, setIsModalOpen } = useModal();
 
   const handleSuccess = (res) => {
     const { entries, meta } = res.data;
@@ -62,14 +63,6 @@ export default function listings() {
   const showModal = (job) => {
     setJobToSave(job);
     setIsModalOpen(true);
-  }
-
-  const hideModal = () => {
-    setIsModalOpen(false);
-  }
-
-  const acceptModal = () => {
-    hideModal();
   }
 
   useEffect(() => {
@@ -117,12 +110,10 @@ export default function listings() {
 
   return (
     <>
-      <ConfirmationModal
-        isOpen={isModalOpen}
-        onClose={hideModal}
-        onAccept={acceptModal}
-        text= "You are about to save this job. Are you sure?"
-      />
+      <CustomModal onSuccess={console.log('success')}>
+        <p>You are about to save this job. Are you sure?</p>
+      </CustomModal>
+
       <section>
         {jobs.map((job) => (
           <div key={job.id} className="listing__card">

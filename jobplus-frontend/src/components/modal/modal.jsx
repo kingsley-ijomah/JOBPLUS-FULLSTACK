@@ -1,13 +1,11 @@
 import React from 'react';
-import './confirmation_modal.scss'; 
+import './modal.scss'; 
 
-const ConfirmationModal = ({ isOpen, onClose, onAccept, text }) => {
-  if (!isOpen) return null;
-
+const Modal = ({ onClose, onAccept, children }) => {
   return (
     <div className="modal-backdrop">
       <div className="modal-content">
-        <p>{text}</p>
+        { children }
         <div className="modal-actions">
           <button onClick={onAccept} className="btn-accept">Accept</button>
           <button onClick={onClose} className="btn-cancel">Cancel</button>
@@ -17,4 +15,4 @@ const ConfirmationModal = ({ isOpen, onClose, onAccept, text }) => {
   );
 };
 
-export default ConfirmationModal;
+export default Modal;
