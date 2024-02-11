@@ -23,7 +23,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/applications" element={<ApplicationPage />} />
-              <Route path="/apply" element={<ApplyPage />} />
+              <Route path="/apply/:jobId" element={<ApplyPage />} />
               <Route path="/listings" element={<ListingsPage />} />
               <Route path="/notifications" element={<NotificationPage />} />
               <Route path="/profile" element={<ProfilePage />} />

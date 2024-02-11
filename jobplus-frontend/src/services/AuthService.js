@@ -7,7 +7,7 @@ const authService = () => {
     await post('auth/local/register', {
       data: userData,
       onSuccess: onSuccess,
-      onFailure: onFailure
+       onFailure: onFailure
     });
   };
 

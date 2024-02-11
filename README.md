@@ -63,3 +63,28 @@ yarn install
 yarn dev
 
 ```
+
+## TODO:
+
+### Apply Page
+- Ability to open apply page with content
+- Ability to toggle Apply status ( Apply / Withdraw )
+
+### Main Nav
+- Show notification icon if notification exists
+- Count Saved Jobs for a user
+
+### Home Page
+- Job Search
+- Click on Sector
+- Click on Categories
+
+### Job Listings/Applications
+- Fetch browse by sector data
+- Fetch browser by location data
+- Ability to click browse by sector list
+- Ability to click browse by location list
+- Ability to save / unsave jobs
+
+### Cookie
+- Persist T&C cookie

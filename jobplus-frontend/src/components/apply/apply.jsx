@@ -1,32 +1,54 @@
-import React from 'react';
+import React, {useEffect, useState, Fragment} from 'react';
 import '../listings/listings.scss';
+import jobService from '../../services/JobService';
+import { useParams } from 'react-router-dom';
 
 import { StarSaved, Money, Location, Timer } from '../images';
 
 export default function apply() {
+  const { jobId } = useParams();
+  const [job, setJob] = useState({});
+
+  const { fetchJob } = jobService();
+
+  const fetchJobData = async () => {
+    await fetchJob(jobId, (res) => {
+      setJob(res.data);
+    });
+  }
+
+  useEffect(() => {
+    fetchJobData();
+  }, []);
+
   return (
     <section>
       <div className="listing__card listing__card--apply">
         <header className="listing__header">
-          <h1 className="listing__title">Regulatory Affairs Senior Manager</h1>
+          <h1 className="listing__title">{job.title}</h1>
           <img className="listing__saved" src={StarSaved} alt="" />
           <p className="listing__company">
-            Posted by <span>Koco Media</span>
+            Posted by <span>{job?.company?.name}</span>
           </p>
         </header>
 
         <ul className="listing__items">
           <li>
             <img src={Money} alt="" />
-            <b>Salary negotiable</b>
+            <b>Salary {job.salaryType}</b>
           </li>
           <li>
             <img src={Location} alt="" />
-            Heyes, <b>Uxbridge</b>
+            {job?.company?.city}, <b>{job?.company?.town}</b>
           </li>
           <li>
             <img src={Timer} alt="" />
-            Contract, full-time
+            {job?.job_types?.map((type, index, array) => (
+              <Fragment key={type.id}>
+                <span>{type.title}</span>
+                {index !== array.length - 1 && <span>, </span>}
+              </Fragment>
+            ))}
           </li>
         </ul>
 
@@ -36,25 +58,14 @@ export default function apply() {
       </div>
 
       <div className="listing__more">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem molestiae
-          delectus culpa dolore sequi debitis eligendi veniam reprehenderit,
-          deleniti voluptate perferendis consectetur quibusdam iure suscipit,
-          quaerat quia, natus eum vel.
-        </p>
+        <p>{job.description}</p>
 
         <h1>Required skills</h1>
 
         <ul className="listing__skills">
-          <li>salesforce</li>
-          <li>SFDC</li>
-          <li>Development</li>
-          <li>Development</li>
-          <li>Development</li>
-          <li>Development</li>
-          <li>Development</li>
-          <li>Development</li>
-          <li>Development</li>
+          {job?.skills?.map((skill) => (
+            <li key={skill.id}>{skill.title}</li>
+          ))}
         </ul>
       </div>
 

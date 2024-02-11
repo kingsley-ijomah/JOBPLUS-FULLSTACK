@@ -163,12 +163,12 @@ export default function listings() {
               </a>
             </p>
 
-            <Link to="#" 
+            <Link to={`/apply/${job.id}`}
               className="listing__cta"
-              onClick={(e) => {
-                e.preventDefault();
-                job.hasApplied ? handleWithdrawApplication(job.id) : handleApplyForJob(job.id);
-              }}
+              // onClick={(e) => {
+              //   e.preventDefault();
+              //   job.hasApplied ? handleWithdrawApplication(job.id) : handleApplyForJob(job.id);
+              // }}
               >
                 <b>{job.hasApplied ? 'Withdraw application' : 'Apply Now'}</b>
             </Link>

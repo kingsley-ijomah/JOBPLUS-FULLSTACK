@@ -18,21 +18,26 @@ module.exports = ({ strapi }) => ({
       ]);
 
       // Fetch the list of jobs the user has applied for
-      const appliedJobs = await strapi.entityService.findMany("api::applied-job.applied-job", {
-        filters: {
-          user: userId,
-        },
-        populate: {
-          job: true,
-          user: true
-        },
-      });
+      const appliedJobs = await strapi.entityService.findMany(
+        "api::applied-job.applied-job",
+        {
+          filters: {
+            user: userId,
+          },
+          populate: {
+            job: true,
+            user: true,
+          },
+        }
+      );
 
       // Create a set of applied job IDs for efficient lookup
-      const appliedJobIds = new Set(appliedJobs.map(appliedJob => appliedJob.job.id));
+      const appliedJobIds = new Set(
+        appliedJobs.map((appliedJob) => appliedJob.job.id)
+      );
 
       // Add the 'hasApplied' field to each job entry
-      const updatedEntries = entries.map(job => ({
+      const updatedEntries = entries.map((job) => ({
         ...job,
         hasApplied: appliedJobIds.has(job.id),
       }));
@@ -56,6 +61,19 @@ module.exports = ({ strapi }) => ({
           },
         },
       };
+    } catch (error) {
+      strapi.log.error(error);
+      throw error;
+    }
+  },
+  async findOne(params) {
+    const { id, ...rest } = params;
+    try {
+      // Fetch job matching supplied id
+      const job = await strapi.entityService.findOne("api::job.job", id, {
+        ...rest
+      });
+      return job;
     } catch (error) {
       strapi.log.error(error);
       throw error;

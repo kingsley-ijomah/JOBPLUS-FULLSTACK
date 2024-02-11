@@ -4,7 +4,7 @@ const jobService = () => {
   const { get } = useApi();
   const MAX_PER_PAGE = 3;
 
-  const fetchJobs = async (page=1, onSuccess) => {
+  const fetchJobs = async (page = 1, onSuccess) => {
     await get('jobs', {
       onSuccess: onSuccess,
       params: {
@@ -14,11 +14,24 @@ const jobService = () => {
         limit: MAX_PER_PAGE,
       },
     });
-  }
+  };
+
+  const fetchJob = async (id, onSuccess) => {
+    await get('job', {
+      onSuccess,
+      params: {
+        id: id,
+        'populate[company]': true,
+        'populate[skills]': true,
+        'populate[job_types]': true,
+      },
+    });
+  };
 
   return {
-    fetchJobs
-  }
+    fetchJobs,
+    fetchJob,
+  };
 };
 
 export default jobService;
