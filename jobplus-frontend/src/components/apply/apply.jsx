@@ -3,6 +3,8 @@ import '../listings/listings.scss';
 import jobService from '../../services/JobService';
 import { useParams } from 'react-router-dom';
 import { useModal } from '../../hooks/useModal';
+import { useAuth } from '../../contexts/AuthContext';
+import applyJobService from '../../services/AppliedJobService';
 
 import { StarSaved, Money, Location, Timer } from '../images';
 
@@ -12,6 +14,8 @@ export default function apply() {
 
   const { fetchJob } = jobService();
   const { CustomModal, setIsModalOpen } = useModal();
+  const { getLoggedInUserId } = useAuth();
+  const { applyForJob, withdrawApplication } = applyJobService();
 
   const fetchJobData = async () => {
     await fetchJob(jobId, (res) => {
@@ -19,16 +23,46 @@ export default function apply() {
     });
   }
 
+  const handleApplyForJob = async() => {
+    const data = {
+      job: jobId,
+      user: getLoggedInUserId(),
+    };
+
+    await applyForJob(data, (res) => {
+      setJob(prevJob => ({ ...prevJob, hasApplied: true }));
+    });
+  };
+  
+  const handleWithdrawApplication = async() => {
+    const data = {
+      jobId: jobId,
+      userId: getLoggedInUserId(),
+    };
+    
+    await withdrawApplication(data, (res) => {
+      setJob(prevJob => ({ ...prevJob, hasApplied: false }));
+    });
+  };
+
+  const handleAccept = async () => {
+    if(job.hasApplied) {
+      // withdraw application
+      handleWithdrawApplication();
+    } else {
+      // apply for job
+      handleApplyForJob();
+    }
+  };
+
   useEffect(() => {
     fetchJobData();
   }, []);
 
-  console.log(job);
-
   return (
     <>
-      <CustomModal>
-        <p>Are you sure you want to apply for: {job.title} role?</p>
+      <CustomModal onSuccess={() => handleAccept()}>
+        <p>{job.hasApplied ? 'Withdrawing from job:' + job.title : 'Applying for job:' + job.title }</p>
       </CustomModal>
       <section>
         <div className="listing__card listing__card--apply">
@@ -61,7 +95,7 @@ export default function apply() {
           </ul>
 
           <div className="form">
-            <input onClick={() => setIsModalOpen(true)} className="form__btn" type="submit" value="Apply now" />
+            <input onClick={() => setIsModalOpen(true)} className="form__btn" type="submit" value={job.hasApplied ? 'Withdraw application' : 'Apply Now'} />
           </div>
         </div>
 
@@ -78,7 +112,7 @@ export default function apply() {
         </div>
 
         <div className="form">
-          <input onClick={() => setIsModalOpen(true)} className="form__btn" type="submit" value="Apply now" />
+          <input onClick={() => setIsModalOpen(true)} className="form__btn" type="submit" value={job.hasApplied ? 'Withdraw application' : 'Apply Now'} />
         </div>
       </section>
     </>

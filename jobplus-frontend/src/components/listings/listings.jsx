@@ -74,40 +74,6 @@ export default function listings() {
     fetchJobs(pageNumber, handleSuccess);
   };
 
-  const handleApplyForJob = async(jobId) => {
-    const data = {
-      job: jobId,
-      user: getLoggedInUserId(),
-    };
-
-    await applyForJob(data, (res) => {
-      const updatedJobs = jobs.map((job) => {
-        if (job.id === jobId) {
-          return { ...job, hasApplied: true };
-        }
-        return job;
-      });
-      setJobs(updatedJobs); 
-    });
-  };
-  
-  const handleWithdrawApplication = async(jobId) => {
-    const data = {
-      jobId: jobId,
-      userId: getLoggedInUserId(),
-    };
-    
-    await withdrawApplication(data, (res) => {
-      const updatedJobs = jobs.map((job) => {
-        if (job.id === jobId) {
-          return { ...job, hasApplied: false };
-        }
-        return job;
-      });
-      setJobs(updatedJobs);
-    });
-  };
-
   return (
     <>
       <CustomModal onSuccess={console.log('success')}>
