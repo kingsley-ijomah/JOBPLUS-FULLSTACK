@@ -31,15 +31,35 @@ module.exports = ({ strapi }) => ({
         }
       );
 
+      // Fetch the list of jobs the user has saved
+      const savedJobs = await strapi.entityService.findMany(
+        "api::saved-job.saved-job",
+        {
+          filters: {
+            user: userId,
+          },
+          populate: {
+            job: true,
+            user: true,
+          },
+        }
+      )
+
       // Create a set of applied job IDs for efficient lookup
       const appliedJobIds = new Set(
         appliedJobs.map((appliedJob) => appliedJob.job.id)
+      );
+
+      // Create a set of saved job IDs for efficient lookup
+      const savedJobIds = new Set(
+        savedJobs.map((savedJob) => savedJob.job.id)
       );
 
       // Add the 'hasApplied' field to each job entry
       const updatedEntries = entries.map((job) => ({
         ...job,
         hasApplied: appliedJobIds.has(job.id),
+        isSaved: savedJobIds.has(job.id)
       }));
 
       // Calculate pagination metadata
