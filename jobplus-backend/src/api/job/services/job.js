@@ -66,13 +66,29 @@ module.exports = ({ strapi }) => ({
       throw error;
     }
   },
-  async findOne(params) {
+  async findOne(params, userId) {
     const { id, ...rest } = params;
     try {
       // Fetch job matching supplied id
       const job = await strapi.entityService.findOne("api::job.job", id, {
         ...rest
       });
+
+      // fetch applied jobs for the current user
+      const appliedJobs = await strapi.entityService.findMany(
+        "api::applied-job.applied-job",
+        {
+          filters: {
+            user: userId,
+            job: id,
+          }
+        }
+      );
+      
+
+      // Add the 'hasApplied' field to the job entry
+      job.hasApplied = appliedJobs.length > 0;
+
       return job;
     } catch (error) {
       strapi.log.error(error);

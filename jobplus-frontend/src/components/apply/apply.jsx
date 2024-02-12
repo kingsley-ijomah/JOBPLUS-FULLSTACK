@@ -23,6 +23,8 @@ export default function apply() {
     fetchJobData();
   }, []);
 
+  console.log(job);
+
   return (
     <>
       <CustomModal>
