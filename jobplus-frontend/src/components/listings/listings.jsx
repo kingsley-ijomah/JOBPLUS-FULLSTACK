@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useModal } from '../../hooks/useModal';
 
-import applyJobService from '../../services/AppliedJobService';
+import savedJobService from '../../services/SavedJobService';
+
 
 const MAX_LENGTH_CHARS = 200;
 
@@ -19,11 +20,12 @@ export default function listings() {
   const [meta, setMeta] = useState({});
   const [jobToSave, setJobToSave] = useState(null);
 
-  const { applyForJob, withdrawApplication } = applyJobService();
-  const { getLoggedInUserId } = useAuth();
   const { fetchJobs } = jobService();
 
   const { CustomModal, setIsModalOpen } = useModal();
+  const { saveJob, removeSavedJob } = savedJobService();
+
+  const { getLoggedInUserId } = useAuth();
 
   const handleSuccess = (res) => {
     const { entries, meta } = res.data;
@@ -65,18 +67,38 @@ export default function listings() {
     setIsModalOpen(true);
   }
 
+  const handlePageChange = (pageNumber) => {
+    fetchJobs(pageNumber, handleSuccess);
+  };
+
+  const handleSaveJob = async () => {
+    const data = {
+      job: jobToSave.id,
+      user: getLoggedInUserId(),
+    };
+
+    await saveJob(data, () => {
+      setJobs(prevJobs => {
+        return prevJobs.map(job => {
+          if (job.id === jobToSave.id) {
+            return { ...job, isSaved: true };
+          }
+          return job;
+        });
+      });
+    });
+  };
+
   useEffect(() => {
     const page = 1;
     fetchJobs(page, handleSuccess);
   }, []);
 
-  const handlePageChange = (pageNumber) => {
-    fetchJobs(pageNumber, handleSuccess);
-  };
+  console.log('jobs', jobs);
 
   return (
     <>
-      <CustomModal onSuccess={console.log('success')}>
+      <CustomModal onSuccess={() => handleSaveJob()}>
         <p>You are about to save this job. Are you sure?</p>
       </CustomModal>
 
@@ -87,7 +109,7 @@ export default function listings() {
               <h1 className="listing__title">
                 {job.title}
               </h1>
-              <img className="listing__saved" src={StarUnSaved} alt="" onClick={() => showModal(job)} />
+              <img className="listing__saved" src={ job.isSaved ? StarSaved : StarUnSaved } alt="" onClick={() => showModal(job)} />
               <p className="listing__company">
                 Posted by <span>{job.company.name}</span>
               </p>
@@ -120,13 +142,7 @@ export default function listings() {
               </a>
             </p>
 
-            <Link to={`/apply/${job.id}`}
-              className="listing__cta"
-              // onClick={(e) => {
-              //   e.preventDefault();
-              //   job.hasApplied ? handleWithdrawApplication(job.id) : handleApplyForJob(job.id);
-              // }}
-              >
+            <Link to={`/apply/${job.id}`} className="listing__cta">
                 <b>{job.hasApplied ? 'Withdraw application' : 'Apply Now'}</b>
             </Link>
           </div>
