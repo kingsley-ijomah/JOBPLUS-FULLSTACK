@@ -17,43 +17,44 @@ module.exports = ({ strapi }) => ({
         strapi.entityService.count("api::job.job", params),
       ]);
 
-      // Fetch the list of jobs the user has applied for
-      const appliedJobs = await strapi.entityService.findMany(
-        "api::applied-job.applied-job",
-        {
-          filters: {
-            user: userId,
-          },
-          populate: {
-            job: true,
-            user: true,
-          },
-        }
-      );
+      // fetch ids from the entries
+      const jobIds = entries.map((job) => job.id);
 
-      // Fetch the list of jobs the user has saved
-      const savedJobs = await strapi.entityService.findMany(
-        "api::saved-job.saved-job",
-        {
-          filters: {
-            user: userId,
-          },
-          populate: {
-            job: true,
-            user: true,
-          },
-        }
-      )
+      // run our queries in parallel
+      const [appliedJobs, savedJobs] = await Promise.all([
+        await strapi.entityService.findMany(
+          "api::applied-job.applied-job",
+          {
+            filters: {
+              user: userId,
+              job: { id: { $in: jobIds } }
+            },
+            populate: {
+              job: true,
+              user: true,
+            },
+          }
+        ),
+        await strapi.entityService.findMany(
+          "api::saved-job.saved-job",
+          {
+            filters: {
+              user: userId,
+              job: { id: { $in: jobIds } }
+            },
+            populate: {
+              job: true,
+              user: true,
+            },
+          }
+        )
+      ]);
 
       // Create a set of applied job IDs for efficient lookup
-      const appliedJobIds = new Set(
-        appliedJobs.map((appliedJob) => appliedJob.job.id)
-      );
+      const appliedJobIds = new Set(appliedJobs.map((appliedJob) => appliedJob.job.id));
 
       // Create a set of saved job IDs for efficient lookup
-      const savedJobIds = new Set(
-        savedJobs.map((savedJob) => savedJob.job.id)
-      );
+      const savedJobIds = new Set(savedJobs.map((savedJob) => savedJob.job.id));
 
       // Add the 'hasApplied' field to each job entry
       const updatedEntries = entries.map((job) => ({
