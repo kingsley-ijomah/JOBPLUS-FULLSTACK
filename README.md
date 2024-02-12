@@ -67,8 +67,8 @@ yarn dev
 ## TODO:
 
 ### Apply Page
-- Ability to open apply page with content
-- Ability to toggle Apply status ( Apply / Withdraw )
+- Ability to open apply page with content =========== DONE
+- Ability to toggle Apply status ( Apply / Withdraw ) =========== DONE
 
 ### Main Nav
 - Show notification icon if notification exists
@@ -80,6 +80,7 @@ yarn dev
 - Click on Categories
 
 ### Job Listings/Applications
+- Save Jobs
 - Fetch browse by sector data
 - Fetch browser by location data
 - Ability to click browse by sector list
