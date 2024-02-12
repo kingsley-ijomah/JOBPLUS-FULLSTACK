@@ -89,17 +89,42 @@ export default function listings() {
     });
   };
 
+
+  const handleRemoveSavedJob = async() => {
+    const data = {
+      job: jobToSave.id,
+      user: getLoggedInUserId(),
+    };
+
+    await removeSavedJob(data, () => {
+      setJobs(prevJobs => {
+        return prevJobs.map(job => {
+          if (job.id === jobToSave.id) {
+            return { ...job, isSaved: false };
+          }
+          return job;
+        });
+      });
+    });
+  };
+
+  const handleModalAccept = () => {
+    if (jobToSave.isSaved) {
+      handleRemoveSavedJob();
+    } else {
+      handleSaveJob();
+    }
+  }
+
   useEffect(() => {
     const page = 1;
     fetchJobs(page, handleSuccess);
   }, []);
 
-  console.log('jobs', jobs);
-
   return (
     <>
-      <CustomModal onSuccess={() => handleSaveJob()}>
-        <p>You are about to save this job. Are you sure?</p>
+      <CustomModal onSuccess={() => handleModalAccept()}>
+        <p>{ jobToSave?.isSaved ? 'Removing job: ' + jobToSave?.title : 'Saving job: ' + jobToSave?.title }</p>
       </CustomModal>
 
       <section>

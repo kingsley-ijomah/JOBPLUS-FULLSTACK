@@ -8,8 +8,8 @@ const savedJobService = () => {
   };
 
   const removeSavedJob = async (data, onSuccess) => {
-    const { jobId, userId } = data;
-    await del(`saved-jobs/${jobId}/${userId}`, { onSuccess });
+    const { job, user } = data;
+    await del(`saved-jobs/${job}/${user}`, { onSuccess });
   }
 
   return {
