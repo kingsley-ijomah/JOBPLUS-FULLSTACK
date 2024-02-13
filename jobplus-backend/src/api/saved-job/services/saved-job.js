@@ -55,4 +55,18 @@ module.exports = ({ strapi }) => ({
       throw error;
     }
   },
+  async getSavedJobsCount(userId) {
+    try {
+      const count = await strapi.entityService.count("api::saved-job.saved-job", {
+        filters: {
+          user: userId,
+        },
+      });
+
+      return count;
+    } catch (error) {
+      strapi.log.error(`Error: ${error.message}`);
+      throw error;
+    }
+  },
 });

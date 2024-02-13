@@ -9,6 +9,11 @@ module.exports = {
       method: 'DELETE',
       path: '/saved-jobs/:jobId/:userId',
       handler: 'saved-job.removeSavedJob'
+    },
+    {
+      method: 'GET',
+      path: '/saved-jobs-count/:userId',
+      handler: 'saved-job.getSavedJobsCount'
     }
   ]
 }
