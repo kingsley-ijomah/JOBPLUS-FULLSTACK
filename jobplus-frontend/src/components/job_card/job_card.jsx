@@ -8,7 +8,7 @@ import { StarSaved, StarUnSaved, Money, Location, Timer } from '../images';
 
 const MAX_LENGTH_CHARS = 200;
 
-export default function JobCard({ job }) {
+export default function JobCard({ job, updateJobState }) {
   const [jobToSave, setJobToSave] = useState(null);
   const [isTruncated, setIsTruncated] = useState(true);
   const { CustomModal, setIsModalOpen } = useModal();
@@ -33,9 +33,11 @@ export default function JobCard({ job }) {
 
     if (job.isSaved) {
       await removeSavedJob(data);
+      updateJobState(job.id, false);
       decrementSavedJobCount();
     } else {
       await saveJob(data);
+      updateJobState(job.id, true);
       incrementSavedJobCount();
     }
   };
