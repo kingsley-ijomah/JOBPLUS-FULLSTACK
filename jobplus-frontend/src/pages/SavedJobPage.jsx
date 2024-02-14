@@ -5,7 +5,7 @@ import Container from '../components/container/container';
 import Cookie from '../components/cookie/cookie';
 import Footer from '../components/footer/footer';
 import ListingFilter from '../components/listings_filter/listings_fillter';
-import Listings from '../components/listings/listings';
+import SavedJob from '../components/saved_jobs/saved_job';
 import Filter from '../components/filter/filter';
 
 export default function SavedJobPage() {
@@ -17,7 +17,7 @@ export default function SavedJobPage() {
         <Container>
           <ListingFilter>
             <Filter />
-            <Listings />
+            <SavedJob />
           </ListingFilter>
         </Container>
         <Cookie />

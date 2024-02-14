@@ -12,7 +12,7 @@ module.exports = ({ strapi }) => ({
         strapi.entityService.findMany("api::job.job", {
           start,
           limit,
-          ...rest,
+          ...rest, // filters, sort, etc
         }),
         strapi.entityService.count("api::job.job", params),
       ]);
