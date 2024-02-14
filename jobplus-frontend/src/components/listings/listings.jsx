@@ -11,6 +11,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useModal } from '../../hooks/useModal';
 
 import savedJobService from '../../services/SavedJobService';
+import { useSavedJobCount } from '../../contexts/SavedJobCountContext';
 
 
 const MAX_LENGTH_CHARS = 200;
@@ -24,6 +25,7 @@ export default function listings() {
 
   const { CustomModal, setIsModalOpen } = useModal();
   const { saveJob, removeSavedJob } = savedJobService();
+  const { incrementSavedJobCount, decrementSavedJobCount } = useSavedJobCount();
 
   const { getLoggedInUserId } = useAuth();
 
@@ -111,8 +113,10 @@ export default function listings() {
   const handleModalAccept = () => {
     if (jobToSave.isSaved) {
       handleRemoveSavedJob();
+      decrementSavedJobCount();
     } else {
       handleSaveJob();
+      incrementSavedJobCount();
     }
   }
 

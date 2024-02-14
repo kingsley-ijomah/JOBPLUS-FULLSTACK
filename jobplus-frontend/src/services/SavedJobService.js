@@ -1,7 +1,7 @@
 import { useApi } from '../hooks/useApi';
 
 const savedJobService = () => {
-  const { post, delete: del } = useApi();
+  const { post, delete: del, get } = useApi();
 
   const saveJob = async (data, onSuccess) => {
     await post(`saved-jobs/`, { data, onSuccess });

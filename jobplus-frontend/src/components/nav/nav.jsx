@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useCookie } from '../../hooks/useCookie';
+import { useSavedJobCount } from '../../contexts/SavedJobCountContext';
 
 import {
   Hamburger,
@@ -15,6 +16,7 @@ import './nav.scss';
 
 export default function nav() {
   const { deleteAuthCookie } = useCookie();
+  const { savedJobCount } = useSavedJobCount();
 
   return (
     <nav className="nav">
@@ -44,7 +46,7 @@ export default function nav() {
         <li>
           <Link to="/saved-jobs">
             <img src={Saved} alt="" />
-            <span className="nav__savedcount">1</span>
+            <span className="nav__savedcount">{ savedJobCount }</span>
           </Link>
         </li>
         <li>
