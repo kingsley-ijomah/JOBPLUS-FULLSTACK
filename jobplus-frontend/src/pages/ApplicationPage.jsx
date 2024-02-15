@@ -5,7 +5,7 @@ import Container from '../components/container/container';
 import Cookie from '../components/cookie/cookie';
 import Footer from '../components/footer/footer';
 import ListingFilter from '../components/listings_filter/listings_fillter';
-import Listings from '../components/listings/listings';
+import Applications from '../components/application/applications';
 import Filter from '../components/filter/filter';
 
 export default function ApplicationPage() {
@@ -17,7 +17,7 @@ export default function ApplicationPage() {
         <Container>
           <ListingFilter>
             <Filter />
-            <Listings />
+            <Applications />
           </ListingFilter>
         </Container>
         <Cookie />

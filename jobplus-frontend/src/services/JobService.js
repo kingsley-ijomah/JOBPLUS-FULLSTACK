@@ -34,6 +34,21 @@ const jobService = () => {
     });
   };
 
+  const fetchAppliedJobs = async (page = 1, onSuccess) => {
+    const userId = getLoggedInUserId();
+
+    await get('jobs', {
+      onSuccess: onSuccess,
+      params: {
+        'populate[company]': true,
+        'populate[job_types]': true,
+        'filters[applied_jobs][user]': userId,
+        start: (page - 1) * MAX_PER_PAGE,
+        limit: MAX_PER_PAGE,
+      },
+    });
+  };
+
   const fetchJob = async (id, onSuccess) => {
     await get('job', {
       onSuccess,
@@ -50,6 +65,7 @@ const jobService = () => {
     fetchJobs,
     fetchJob,
     fetchSavedJobs,
+    fetchAppliedJobs,
   };
 };
 
