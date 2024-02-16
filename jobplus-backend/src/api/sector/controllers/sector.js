@@ -4,6 +4,15 @@
  * sector controller
  */
 
-const { createCoreController } = require('@strapi/strapi').factories;
+module.exports = ({ strapi }) => ({
+  async sectorJobCount(ctx) {
+    try {
+      ctx.body = await strapi
+        .service("api::sector.sector")
+        .sectorJobCount();
+    } catch (error) {
+      strapi.log.error(error);
+    }
+  },
+});
 
-module.exports = createCoreController('api::sector.sector');

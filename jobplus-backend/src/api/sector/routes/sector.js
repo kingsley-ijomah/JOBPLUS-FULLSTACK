@@ -4,6 +4,12 @@
  * sector router
  */
 
-const { createCoreRouter } = require('@strapi/strapi').factories;
-
-module.exports = createCoreRouter('api::sector.sector');
+module.exports = {
+  routes: [
+    {
+      method: 'GET',
+      path: '/sectors/jobCount',
+      handler: 'sector.sectorJobCount'
+    }
+  ]
+}
