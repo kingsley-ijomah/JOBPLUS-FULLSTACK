@@ -23,4 +23,13 @@ module.exports = ({ strapi }) => ({
       strapi.log.error(error);
     }
   },
+  async findLocationJobCount(ctx) {
+    try {
+      ctx.body = await strapi
+        .service("api::job.job")
+        .findLocationJobCount(ctx.query);
+    } catch (error) {
+      strapi.log.error(error);
+    }
+  },
 });

@@ -9,6 +9,11 @@ module.exports = {
       method: 'GET',
       path: '/job',
       handler: 'job.findOne'
+    },
+    {
+      method: 'GET',
+      path: '/jobs/location-job-count',
+      handler: 'job.findLocationJobCount'
     }
   ]
 }

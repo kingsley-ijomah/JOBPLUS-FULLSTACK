@@ -116,4 +116,24 @@ module.exports = ({ strapi }) => ({
       throw error;
     }
   },
+  async findLocationJobCount(params) {
+    // Fetch all jobs with their locations
+    const jobs = await strapi.entityService.findMany("api::job.job", {
+      fields: ['location'], // Only select the location field
+    });
+
+    // count the number of jobs in each location
+    const locationCounts = jobs.reduce((acc, job) => {
+      acc[job.location] = (acc[job.location] || 0) + 1;
+      return acc;
+    }, {});
+
+    // convert it an array of objects
+    const result = Object.entries(locationCounts).map(([location, count]) => ({
+      location,
+      count
+    }));
+
+    return result
+  },
 });
