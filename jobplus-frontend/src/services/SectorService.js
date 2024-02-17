@@ -14,8 +14,13 @@ const sectorService = () => {
     await get('home-sector', { onSuccess, params });
   };
 
+  const fetchSectorJobCount = async (onSuccess) => {
+    await get('sectors/jobCount', { onSuccess });
+  }
+
   return {
-    fetchHomeSector
+    fetchHomeSector,
+    fetchSectorJobCount,
   }
 };
 
