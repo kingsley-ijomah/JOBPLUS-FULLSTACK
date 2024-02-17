@@ -12,6 +12,8 @@ import SavedJobPage from './pages/SavedJobPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import PrivateRoute from './components/private_route/private_route';
+import BrowseBySectorPage from './pages/BrowseBySectorPage';
+import BrowseByLocationPage from './pages/BrowseByLocationPage';
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
               <Route path="/notifications" element={<NotificationPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/saved-jobs" element={<SavedJobPage />} />
+              <Route path="/browse-by-sector/:sectorId" element={<BrowseBySectorPage />} />
+              <Route path="/browse-by-location/:location" element={<BrowseByLocationPage />} />
             </Routes>
           </PrivateRoute>
         }
