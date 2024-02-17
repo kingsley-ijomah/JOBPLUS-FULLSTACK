@@ -4,6 +4,17 @@
  * sector service
  */
 module.exports = ({ strapi }) => ({
+  async find() {
+    return strapi.entityService.findMany('api::sector.sector', {
+      populate: {
+        categories: {
+          populate: {
+            jobs: true,
+          },
+        },
+      },
+    });
+  },
   async sectorJobCount() {
     const sectors = await strapi.entityService.findMany('api::sector.sector', {
       populate: {
@@ -22,8 +33,8 @@ module.exports = ({ strapi }) => ({
       }));
 
       return {
-        ...sector,
-        categories: categoriesWithJobCounts,
+        id: sector.id,
+        title: sector.title,
         totalJobCount: categoriesWithJobCounts.reduce((acc, category) => acc + category.jobCount, 0),
       };
     });
