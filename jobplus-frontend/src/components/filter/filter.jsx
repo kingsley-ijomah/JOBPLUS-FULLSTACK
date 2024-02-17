@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import './filter.scss';
 import sectorService from '../../services/SectorService';
+import jobService from '../../services/JobService';
 
 export default function filter() {
   const [sectorJobCount, setSectorJobCount] = useState([]);
+  const [locationJobCount, setLocationJobCount] = useState([]);
 
   const { fetchSectorJobCount } = sectorService();
+  const { fetchLocationJobCount } = jobService();
 
   const fetchSectorJobCountData = async () => {
     await fetchSectorJobCount((res) => {
@@ -13,8 +16,15 @@ export default function filter() {
     });
   }
 
+  const fetchLocationJobCountData = async () => {
+    await fetchLocationJobCount((res) => {
+      setLocationJobCount(res.data);
+    });
+  }
+
   useEffect(() => {
     fetchSectorJobCountData();
+    fetchLocationJobCountData();
   }, []);
 
   return (
@@ -33,15 +43,11 @@ export default function filter() {
       <div className="filter__links">
         <h1>Browse by location</h1>
         <ul>
-          <li>
-            Jobs in London <span>(14)</span>
-          </li>
-          <li>
-            Jobs in West Midlands <span>(200)</span>
-          </li>
-          <li>
-            Jobs in Yorkshire <span>(13)</span>
-          </li>
+          {locationJobCount.map((item, index) => (
+            <li key={index}>
+              Jobs in {item.location} <span>({item.count})</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

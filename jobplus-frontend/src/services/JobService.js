@@ -61,11 +61,16 @@ const jobService = () => {
     });
   };
 
+  const fetchLocationJobCount = async (onSuccess) => {
+    await get('jobs/location-job-count', { onSuccess });
+  };
+
   return {
     fetchJobs,
     fetchJob,
     fetchSavedJobs,
     fetchAppliedJobs,
+    fetchLocationJobCount,
   };
 };
 
