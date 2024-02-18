@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './filter.scss';
 import sectorService from '../../services/SectorService';
 import jobService from '../../services/JobService';
+import { Link } from 'react-router-dom';
 
 export default function filter() {
   const [sectorJobCount, setSectorJobCount] = useState([]);
@@ -34,7 +35,9 @@ export default function filter() {
         <ul>
           {sectorJobCount.map((sector) => (
             <li key={sector.id}>
-              {sector.title} <span>({sector.totalJobCount})</span>
+              <Link to={`/browse-by-sector/${sector.id}`}>
+                {sector.title} <span>({sector.totalJobCount})</span>
+              </Link>
             </li>
           ))}
         </ul>
@@ -45,7 +48,9 @@ export default function filter() {
         <ul>
           {locationJobCount.map((item, index) => (
             <li key={index}>
-              Jobs in {item.location} <span>({item.count})</span>
+              <Link to={`/browse-by-location/${item.location}`}>
+                Jobs in {item.location} <span>({item.count})</span>
+              </Link>
             </li>
           ))}
         </ul>

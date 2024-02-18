@@ -65,12 +65,42 @@ const jobService = () => {
     await get('jobs/location-job-count', { onSuccess });
   };
 
+  const fetchJobsBySectorId = async (page = 1, sectorId, onSuccess) => {
+
+    await get('jobs', {
+      onSuccess: onSuccess,
+      params: {
+        'populate[company]': true,
+        'populate[job_types]': true,
+        'filters[category][sector][id]': sectorId,
+        start: (page - 1) * MAX_PER_PAGE,
+        limit: MAX_PER_PAGE,
+      },
+    });
+  };
+
+  const fetchJobsByLocation = async (page = 1, location, onSuccess) => {
+
+    await get('jobs', {
+      onSuccess: onSuccess,
+      params: {
+        'populate[company]': true,
+        'populate[job_types]': true,
+        'filters[location]': location,
+        start: (page - 1) * MAX_PER_PAGE,
+        limit: MAX_PER_PAGE,
+      },
+    });
+  };
+
   return {
     fetchJobs,
     fetchJob,
     fetchSavedJobs,
     fetchAppliedJobs,
     fetchLocationJobCount,
+    fetchJobsBySectorId,
+    fetchJobsByLocation,
   };
 };
 
