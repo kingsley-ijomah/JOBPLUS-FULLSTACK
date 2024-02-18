@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useJobData = (fetchFunction) => {
+export const useJobData = (fetchFunction, params={}) => {
   const [jobs, setJobs] = useState([]);
   const [meta, setMeta] = useState({});
 
@@ -18,7 +18,12 @@ export const useJobData = (fetchFunction) => {
   };
 
   const handlePageChange = (pageNumber) => {
-    fetchFunction(pageNumber, handleSuccess);
+    if(params.sectorId) {
+      fetchFunction(pageNumber, params.sectorId, handleSuccess);
+    } else {
+      fetchFunction(pageNumber, handleSuccess);
+    }
+    
   };
 
   const updateJobState = (jobId, isSaved) => {
@@ -32,8 +37,13 @@ export const useJobData = (fetchFunction) => {
 
   useEffect(() => {
     const page = 1;
-    fetchFunction(page, handleSuccess);
-  }, []);
+    if(params.sectorId) {
+      fetchFunction(page, params.sectorId, handleSuccess);
+    } else {
+      fetchFunction(page, handleSuccess);
+    }
+  }, [JSON.stringify(params)]);
+
 
   return {
     jobs,
