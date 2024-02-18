@@ -7,7 +7,7 @@ const jobService = () => {
 
   const MAX_PER_PAGE = 3;
 
-  const fetchJobs = async (page = 1, onSuccess) => {
+  const fetchJobs = async ({ page }, onSuccess) => {
     await get('jobs', {
       onSuccess: onSuccess,
       params: {
@@ -19,7 +19,7 @@ const jobService = () => {
     });
   };
 
-  const fetchSavedJobs = async (page = 1, onSuccess) => {
+  const fetchSavedJobs = async ({ page }, onSuccess) => {
     const userId = getLoggedInUserId();
 
     await get('jobs', {
@@ -34,7 +34,7 @@ const jobService = () => {
     });
   };
 
-  const fetchAppliedJobs = async (page = 1, onSuccess) => {
+  const fetchAppliedJobs = async ({ page }, onSuccess) => {
     const userId = getLoggedInUserId();
 
     await get('jobs', {
@@ -65,7 +65,7 @@ const jobService = () => {
     await get('jobs/location-job-count', { onSuccess });
   };
 
-  const fetchJobsBySectorId = async (page = 1, sectorId, onSuccess) => {
+  const fetchJobsBySectorId = async ({ page, sectorId }, onSuccess) => {
 
     await get('jobs', {
       onSuccess: onSuccess,
@@ -79,7 +79,7 @@ const jobService = () => {
     });
   };
 
-  const fetchJobsByLocation = async (page = 1, location, onSuccess) => {
+  const fetchJobsByLocation = async ({ page, location }, onSuccess) => {
 
     await get('jobs', {
       onSuccess: onSuccess,

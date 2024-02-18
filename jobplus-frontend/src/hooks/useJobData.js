@@ -18,12 +18,7 @@ export const useJobData = (fetchFunction, params={}) => {
   };
 
   const handlePageChange = (pageNumber) => {
-    if(params.sectorId) {
-      fetchFunction(pageNumber, params.sectorId, handleSuccess);
-    } else {
-      fetchFunction(pageNumber, handleSuccess);
-    }
-    
+    fetchFunction({page: pageNumber, ...params}, handleSuccess);
   };
 
   const updateJobState = (jobId, isSaved) => {
@@ -36,12 +31,7 @@ export const useJobData = (fetchFunction, params={}) => {
   };
 
   useEffect(() => {
-    const page = 1;
-    if(params.sectorId) {
-      fetchFunction(page, params.sectorId, handleSuccess);
-    } else {
-      fetchFunction(page, handleSuccess);
-    }
+    fetchFunction({page: 1, ...params}, handleSuccess);
   }, [JSON.stringify(params)]);
 
 
