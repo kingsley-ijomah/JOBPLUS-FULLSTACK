@@ -7,7 +7,7 @@ const jobService = () => {
 
   const MAX_PER_PAGE = 3;
 
-  const fetchJobs = async ({ page }, onSuccess) => {
+  const fetchJobs = async ({ page, what='', where='' }, onSuccess) => {
     await get('jobs', {
       onSuccess: onSuccess,
       params: {
@@ -15,6 +15,8 @@ const jobService = () => {
         'populate[job_types]': true,
         start: (page - 1) * MAX_PER_PAGE,
         limit: MAX_PER_PAGE,
+        what,
+        where,
       },
     });
   };
