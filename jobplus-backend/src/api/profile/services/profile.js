@@ -4,6 +4,26 @@
  * profile service
  */
 
-const { createCoreService } = require('@strapi/strapi').factories;
+module.exports = ({ strapi }) => ({
+  async saveProfile(data, userId) {
+    // check if user profile exists
+    const existingProfile = await strapi.db.query('api::profile.profile').findOne({
+      where: { user: userId },
+      populate: { user: true },
+    });
 
-module.exports = createCoreService('api::profile.profile');
+    const profile = existingProfile
+    ? await strapi.db.query('api::profile.profile').update({
+        where: { id: existingProfile.id },
+        data: data,
+      })
+    : await strapi.db.query('api::profile.profile').create({
+        data: {
+          ...data,
+          user: userId,
+        },
+      });
+
+    return profile;
+  }
+});
