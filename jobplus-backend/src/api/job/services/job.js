@@ -8,15 +8,23 @@ module.exports = ({ strapi }) => ({
   async find(params, userId) {
     const { start = 0, limit = 10, what='', where='', ...rest } = params;
 
+    // build the what query
+    const whatQuery = what 
+    ? {
+      $or: [
+        { title: { $containsi: what } },
+        { skills: { title: { $containsi: what } } },
+        { company: { name: { $containsi: what } } },
+      ]
+    }:{}
+
     try {
       const [entries, totalCount] = await Promise.all([
         strapi.entityService.findMany("api::job.job", {
           start,
           limit,
           ...rest, // filters, sort, etc
-          filters: {
-            location: { $containsi: where }
-          }
+          filters: whatQuery,
         }),
         strapi.entityService.count("api::job.job", params),
       ]);
