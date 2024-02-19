@@ -18,13 +18,29 @@ module.exports = ({ strapi }) => ({
       ]
     }:{}
 
+    // build the where query
+    const whereQuery = where
+    ? {
+      $or: [
+        { location: { $containsi: where } },
+        { company: {
+          $or: [
+            { name: { $containsi: where } },
+            { town: { $containsi: where } },
+            { city: { $containsi: where } },
+            { postcode: { $containsi: where } },
+          ]
+        }}
+      ]
+    }:{}
+
     try {
       const [entries, totalCount] = await Promise.all([
         strapi.entityService.findMany("api::job.job", {
           start,
           limit,
           ...rest, // filters, sort, etc
-          filters: whatQuery,
+          filters: whereQuery,
         }),
         strapi.entityService.count("api::job.job", params),
       ]);
