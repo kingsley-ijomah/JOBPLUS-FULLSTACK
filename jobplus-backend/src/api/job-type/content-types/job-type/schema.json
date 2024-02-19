@@ -19,6 +19,12 @@
       "relation": "manyToMany",
       "target": "api::job.job",
       "mappedBy": "job_types"
+    },
+    "profiles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::profile.profile",
+      "mappedBy": "job_types"
     }
   }
 }
