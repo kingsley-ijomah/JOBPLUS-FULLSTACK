@@ -25,5 +25,17 @@ module.exports = ({ strapi }) => ({
       });
 
     return profile;
-  }
+  },
+  async findOne(userId) {
+    const profile = await strapi.db.query('api::profile.profile').findOne({
+      where: { user: userId },
+      populate: { 
+        user: true,
+        sector: true,
+        job_types: true,
+      },
+    });
+
+    return profile;
+  },
 });
