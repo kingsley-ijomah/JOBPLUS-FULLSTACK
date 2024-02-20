@@ -57,6 +57,8 @@ export default function profile() {
           className="form__field"
           type="text"
           placeholder="Desired job title"
+          name="desired_job_title"
+          value={profileData.desired_job_title}
         />
       </div>
 
@@ -66,6 +68,8 @@ export default function profile() {
           className="form__field"
           type="text"
           placeholder="Min per annum salary"
+          name="min_per_anum_salary"
+          value={profileData.min_per_anum_salary}
         />
       </div>
 
@@ -77,6 +81,7 @@ export default function profile() {
             type="checkbox"
             name="job_types"
             value={jobType.id}
+            checked={profileData.job_types.some(jt => jt.id === jobType.id)}
             /> {jobType.attributes.title}
           </p>
         ))}
@@ -88,7 +93,7 @@ export default function profile() {
         <select 
           className="form__select"
           name="sector"
-          value={''}
+          value={profileData.sector.id}
         >
           <option selected="">Choose a sector</option>
           {sectors.map((sector) => (
@@ -100,7 +105,11 @@ export default function profile() {
       <div className="form__group form__group--page">
         <label className="form__label">Experience</label>
         <br />
-        <textarea className="form__textarea"></textarea>
+        <textarea 
+          className="form__textarea"
+          name="experience"
+          value={profileData.experience}
+        ></textarea>
       </div>
 
       <div className="form__group form__group--page">
