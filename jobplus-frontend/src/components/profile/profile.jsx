@@ -6,6 +6,13 @@ import sectorService from '../../services/SectorService';
 import jobTypesService from '../../services/JobTypesService';
 
 export default function profile() {
+  const [profileData, setProfileData] = useState({
+    desired_job_title: '',
+    min_per_anum_salary: '',
+    experience: '',
+    job_types: [],
+    sector: {},
+  });
   const [sectors, setSectors] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
 
@@ -14,6 +21,19 @@ export default function profile() {
   const { fetchProfile, saveProfile } = profileService();
 
   useEffect(() => {
+    // Fetch the profile data
+    fetchProfile((profileRes) => {
+      if (profileRes.data) {
+        setProfileData({
+          desired_job_title: profileRes.data.desired_job_title,
+          min_per_anum_salary: profileRes.data.min_per_anum_salary,
+          experience: profileRes.data.experience,
+          job_types: profileRes.data.job_types.map((jobType) => ({id: jobType.id})),
+          sector: {id: profileRes.data.sector.id},
+        });
+      }
+    });
+
     // Fetch the job types
     fetchJobTypes((jobTypesRes) => {
       if (jobTypesRes.data) {
