@@ -29,10 +29,27 @@ export default function profile() {
     });
   };
 
+  const handleCheckboxChange = (e) => {
+    const { value, checked } = e.target;
+    const valueAsNumber = parseInt(value); // Convert the value to a number
+
+    let updatedJobTypes = checked
+      ? [...profileData.job_types, { id: valueAsNumber }]
+      : profileData.job_types.filter(jt => jt.id !== valueAsNumber);
+
+    setProfileData(prevData => ({
+      ...prevData,
+      job_types: updatedJobTypes,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
    
-    console.log('profileData', profileData);
+    // Save the profile data
+    saveProfile(profileData, (res) => {
+      console.log(res);
+    });
   }
 
   useEffect(() => {
@@ -99,6 +116,7 @@ export default function profile() {
             name="job_types"
             value={jobType.id}
             checked={profileData.job_types.some(jt => jt.id === jobType.id)}
+            onChange={handleCheckboxChange}
             /> {jobType.attributes.title}
           </p>
         ))}
