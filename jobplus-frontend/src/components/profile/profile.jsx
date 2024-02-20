@@ -20,6 +20,21 @@ export default function profile() {
   const { fetchJobTypes } = jobTypesService();
   const { fetchProfile, saveProfile } = profileService();
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setProfileData({
+      ...profileData,
+      [name]: name === 'sector' ? {id: parseInt(value)} : value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+   
+    console.log('profileData', profileData);
+  }
+
   useEffect(() => {
     // Fetch the profile data
     fetchProfile((profileRes) => {
@@ -50,7 +65,7 @@ export default function profile() {
   }, []);
 
   return (
-    <div className="form form--page">
+    <form className="form form--page" onSubmit={handleSubmit}>
       <div className="form__group form__group--page">
         <label className="form__label">Desired job title</label>
         <input
@@ -59,6 +74,7 @@ export default function profile() {
           placeholder="Desired job title"
           name="desired_job_title"
           value={profileData.desired_job_title}
+          onChange={handleInputChange}
         />
       </div>
 
@@ -70,6 +86,7 @@ export default function profile() {
           placeholder="Min per annum salary"
           name="min_per_anum_salary"
           value={profileData.min_per_anum_salary}
+          onChange={handleInputChange}
         />
       </div>
 
@@ -94,6 +111,7 @@ export default function profile() {
           className="form__select"
           name="sector"
           value={profileData.sector.id}
+          onChange={handleInputChange}
         >
           <option selected="">Choose a sector</option>
           {sectors.map((sector) => (
@@ -109,12 +127,13 @@ export default function profile() {
           className="form__textarea"
           name="experience"
           value={profileData.experience}
+          onChange={handleInputChange}
         ></textarea>
       </div>
 
       <div className="form__group form__group--page">
         <input className="form__btn" type="submit" value="Submit" />
       </div>
-    </div>
+    </form>
   );
 }
