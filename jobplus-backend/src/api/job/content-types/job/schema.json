@@ -73,6 +73,12 @@
       "relation": "oneToMany",
       "target": "api::saved-job.saved-job",
       "mappedBy": "job"
+    },
+    "notified_jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::notified-job.notified-job",
+      "mappedBy": "job"
     }
   }
 }
