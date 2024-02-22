@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useCookie } from '../../hooks/useCookie';
 import { useSavedJobCount } from '../../contexts/SavedJobCountContext';
+import notifyService from '../../services/NotifyService';
 
 import {
   Hamburger,
   Magnify,
   NotifyActive,
+  Notify,
   Saved,
   Profile,
   Exit,
@@ -17,6 +19,18 @@ import './nav.scss';
 export default function nav() {
   const { deleteAuthCookie } = useCookie();
   const { savedJobCount } = useSavedJobCount();
+  const [notifyCount, setNotifyCount] = useState(0);
+  const { getNotifyJobsCount } = notifyService();
+
+  const getNotifyJobsCountData = async () => {
+    await getNotifyJobsCount((res) => {
+      setNotifyCount(res.data);
+    });
+  };
+
+  useEffect(() => {
+    getNotifyJobsCountData();
+  }, []);
 
   return (
     <nav className="nav">
@@ -40,7 +54,11 @@ export default function nav() {
         </li>
         <li>
           <Link to="/notifications">
-            <img src={NotifyActive} alt="" />
+            { notifyCount > 0 ? (
+              <img src={NotifyActive} alt="" />
+            ) : (
+              <img src={Notify} alt="" />
+            )}
           </Link>
         </li>
         <li>
