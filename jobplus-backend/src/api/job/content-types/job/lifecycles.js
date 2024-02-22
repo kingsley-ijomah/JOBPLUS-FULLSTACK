@@ -23,9 +23,21 @@ module.exports = {
         min_per_anum_salary: { $lte: job.salary},
         job_types: { id: { $in: job.job_types.map((jt) => jt.id)}},
         sector: { id: job.category.sector.id }
-      }
+      },
+      populate: ['user']
     });
 
-    console.log('matching_profiles', matching_profiles);
+    // Ensure matchingProfiles is an array before iterating
+    const profiles = Array.isArray(matching_profiles) ? matching_profiles : [matching_profiles];
+
+    // Create notified jobs for each matching profile
+    for (const profile of profiles) {
+      await strapi.entityService.create("api::notified-job.notified-job", {
+        data: {
+          user: profile.user.id,
+          job: job.id
+        }
+      });
+    }
   }
 };
