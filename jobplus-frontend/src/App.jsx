@@ -15,6 +15,7 @@ import PrivateRoute from './components/private_route/private_route';
 import BrowseBySectorPage from './pages/BrowseBySectorPage';
 import BrowseByLocationPage from './pages/BrowseByLocationPage';
 import SearchResultPage from './pages/SearchResultPage';
+import NotifiedJobPage from './pages/NotifiedJobPage';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
               <Route path="/browse-by-sector/:sectorId" element={<BrowseBySectorPage />} />
               <Route path="/browse-by-location/:location" element={<BrowseByLocationPage />} />
               <Route path="/search-result" element={<SearchResultPage />} />
+              <Route path="/notified-jobs" element={<NotifiedJobPage />} />
             </Routes>
           </PrivateRoute>
         }

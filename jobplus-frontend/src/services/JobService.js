@@ -95,6 +95,21 @@ const jobService = () => {
     });
   };
 
+  const fetchJobsByNotify = async ({ page }, onSuccess) => {
+    const userId = getLoggedInUserId();
+
+    await get('jobs', {
+      onSuccess: onSuccess,
+      params: {
+        'populate[company]': true,
+        'populate[job_types]': true,
+        'filters[notified_jobs][user]': userId,
+        start: (page - 1) * MAX_PER_PAGE,
+        limit: MAX_PER_PAGE,
+      },
+    });
+  };
+
   return {
     fetchJobs,
     fetchJob,
@@ -103,6 +118,7 @@ const jobService = () => {
     fetchLocationJobCount,
     fetchJobsBySectorId,
     fetchJobsByLocation,
+    fetchJobsByNotify,
   };
 };
 

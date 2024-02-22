@@ -53,7 +53,7 @@ export default function nav() {
           </Link>
         </li>
         <li>
-          <Link to="/notifications">
+          <Link to="/notified-jobs">
             { notifyCount > 0 ? (
               <img src={NotifyActive} alt="" />
             ) : (
