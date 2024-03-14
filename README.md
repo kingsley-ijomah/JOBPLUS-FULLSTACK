@@ -63,10 +63,11 @@ mv .env.sample .env
 node generateSecrets.js
 
 # Make sure to paste sendgrid api key into .env
-SENDGRID_API_KEY=<<PASTE API KEY>>
+SENDGRID_API_KEY=<PASTE API KEY>
 
 # Start the backend server
 yarn dev
+
 ```
 
 ### Frontend
@@ -76,6 +77,9 @@ cd jobplus-frontend
 
 # Install dependencies using Yarn
 yarn install
+
+# Rename .env.sample to .env
+mv .env.sample .env
 
 # Start the backend server
 yarn dev
