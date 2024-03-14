@@ -56,7 +56,7 @@ cd jobplus-backend
 yarn install
 
 # Rename .env.sample to .env
-mv .env.sample .env
+cp .env.sample .env
 
 # Run script to generate .env secrets
 # Copy printed values and save in .env file
@@ -78,8 +78,8 @@ cd jobplus-frontend
 # Install dependencies using Yarn
 yarn install
 
-# Rename .env.sample to .env
-mv .env.sample .env
+# Make copy of .env.sample to .env
+cp .env.sample .env
 
 # Start the backend server
 yarn dev
