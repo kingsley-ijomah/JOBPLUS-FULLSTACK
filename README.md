@@ -39,7 +39,7 @@ git clone https://github.com/kingsley-ijomah/JOBPLUS-FULLSTACK.git
 cd JOBPLUS-FULLSTACK
 ```
 
-### Frontend
+### Backend
 ```bash
 # Navigate to the backend directory
 cd jobplus-backend
@@ -47,11 +47,18 @@ cd jobplus-backend
 # Install dependencies using Yarn
 yarn install
 
+# Rename .env.sample to .env
+mv .env.sample .env
+
+# Run script to generate .env secrets
+# Copy printed values and save in .env file
+node generateSecrets.js
+
 # Start the backend server
 yarn dev
 ```
 
-### Backend
+### Frontend
 ```bash
 # Navigate to the frontend directory
 cd jobplus-frontend
