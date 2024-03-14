@@ -29,6 +29,14 @@ JOBPLUS is a comprehensive full-stack web application designed to streamline the
 ![JOBPLUS Admin Interface](./assets/jobplus-frontend1.gif)
 ![JOBPLUS Admin Interface](./assets/jobplus-frontend1.gif)
 
+## External Requirements
+```bash
+# This app sends emails so require email provider
+# setup a free sendgrid account and obtain sendgrid API_KEY
+# Make a note of api key for use in instruction below
+visit: https://sendgrid.com/
+```
+
 ## Installation
 
 ### Clone the repository
@@ -53,6 +61,9 @@ mv .env.sample .env
 # Run script to generate .env secrets
 # Copy printed values and save in .env file
 node generateSecrets.js
+
+# Make sure to paste sendgrid api key into .env
+SENDGRID_API_KEY=<<PASTE API KEY>>
 
 # Start the backend server
 yarn dev
