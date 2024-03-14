@@ -65,8 +65,17 @@ node generateSecrets.js
 # Make sure to paste sendgrid api key into .env
 SENDGRID_API_KEY=<PASTE API KEY>
 
+# seed database
+yarn seed
+
 # Start the backend server
 yarn dev
+
+# login to backend
+http://localhost:1337/admin/
+
+username: admin@jobplus.com
+password: Pass123456
 
 ```
 
@@ -84,4 +93,7 @@ cp .env.sample .env
 # Start the backend server
 yarn dev
 
+# Login to frontend
+username: user@jobplus.com
+password: Pass123456
 ```
